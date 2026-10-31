@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Particle Forge</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="panel left-panel">
+        <div class="brand-box">
+          <div class="brand-badge">PF</div>
+          <div>
+            <h1>Particle Forge</h1>
+            <p>creative sandbox</p>
+          </div>
+        </div>
+
+        <div class="section-title">Materials</div>
+        <div id="materialList" class="material-list"></div>
+      </aside>
+
+      <main class="sim-panel">
+        <div class="toolbar">
+          <div class="chip" id="selectedMaterialName">Sand</div>
+          <button id="pauseBtn" class="toolbar-btn">Pause</button>
+          <button id="clearBtn" class="toolbar-btn">Clear</button>
+          <button id="terrainBtn" class="toolbar-btn">Random Terrain</button>
+          <button id="saveBtn" class="toolbar-btn accent">Screenshot</button>
+        </div>
+
+        <canvas id="world" width="1260" height="770"></canvas>
+
+        <div class="statusbar">
+          <div class="status-item">
+            <span>Brush</span>
+            <strong id="brushSizeLabel">3</strong>
+          </div>
+          <div class="status-item">
+            <span>Mode</span>
+            <strong id="toolModeLabel">Paint</strong>
+          </div>
+          <div class="status-item">
+            <span>Cells</span>
+            <strong id="cellCount">0</strong>
+          </div>
+        </div>
+      </main>
+
+      <aside class="panel right-panel">
+        <div class="section-title">Tools</div>
+
+        <div class="tool-group">
+          <button data-mode="paint" class="tool-btn active">Paint</button>
+          <button data-mode="erase" class="tool-btn">Erase</button>
+          <button data-mode="heat" class="tool-btn">Heat</button>
+        </div>
+
+        <div class="range-block">
+          <label for="brushSize">Brush size</label>
+          <input id="brushSize" type="range" min="1" max="9" value="3" />
+        </div>
+
+        <div class="guide-box">
+          <h3>Controls</h3>
+          <ul>
+            <li>Left click to paint</li>
+            <li>Right click to erase</li>
+            <li>Scroll to change brush size</li>
+            <li>Q/E to cycle materials</li>
+          </ul>
+        </div>
+
+        <div class="guide-box">
+          <h3>Tips</h3>
+          <ul>
+            <li>Water cools lava</li>
+            <li>Fire ignites oil and wood</li>
+            <li>Acid dissolves almost everything</li>
+            <li>Steam rises and fades</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
