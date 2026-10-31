@@ -12,8 +12,8 @@ export function inBounds(x, y) {
   return x >= 0 && x < WORLD_WIDTH && y >= 0 && y < WORLD_HEIGHT;
 }
 
-export function randomChance(probability) {
-  return Math.random() < probability;
+export function randomChance(value) {
+  return Math.random() < value;
 }
 
 export function getMaterialByName(name) {
@@ -21,9 +21,9 @@ export function getMaterialByName(name) {
 }
 
 export function getMaterialById(id) {
-  const idMap = new Map();
-  Object.entries(MATERIALS).forEach(([name, material]) => idMap.set(material.id, name));
-  return MATERIALS[idMap.get(id)] || MATERIALS.empty;
+  const map = new Map();
+  Object.entries(MATERIALS).forEach(([name, material]) => map.set(material.id, name));
+  return MATERIALS[map.get(id)] || MATERIALS.empty;
 }
 
 export function setCell(x, y, type, lifeValue = 0, temp = getMaterialByName(type).baseTemp) {
@@ -44,20 +44,21 @@ export function clearCell(x, y) {
 
 export function swapCells(x1, y1, x2, y2) {
   if (!inBounds(x1, y1) || !inBounds(x2, y2)) return;
+
   const a = idx(x1, y1);
   const b = idx(x2, y2);
 
-  const tmpId = grid[a];
-  const tmpTemp = temperature[a];
-  const tmpLife = life[a];
+  const tempId = grid[a];
+  const tempTemp = temperature[a];
+  const tempLife = life[a];
 
   grid[a] = grid[b];
   temperature[a] = temperature[b];
   life[a] = life[b];
 
-  grid[b] = tmpId;
-  temperature[b] = tmpTemp;
-  life[b] = tmpLife;
+  grid[b] = tempId;
+  temperature[b] = tempTemp;
+  life[b] = tempLife;
 }
 
 export function avgTemp(x, y, radius = 1) {
@@ -102,6 +103,7 @@ export function generateTerrain() {
     const cx = Math.floor(Math.random() * WORLD_WIDTH);
     const cy = Math.floor(Math.random() * (WORLD_HEIGHT - 30)) + 18;
     const r = 6 + Math.random() * 10;
+
     for (let yy = cy - r; yy <= cy + r; yy++) {
       for (let xx = cx - r; xx <= cx + r; xx++) {
         if (!inBounds(xx, yy)) continue;

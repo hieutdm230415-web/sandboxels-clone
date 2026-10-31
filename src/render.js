@@ -1,13 +1,15 @@
 import { MATERIALS } from './config.js';
 import {
+  grid,
+  temperature,
+  life,
   idx,
   inBounds,
   randomChance,
   avgTemp,
   setCell,
   clearCell,
-  swapCells,
-  grid,
+  swapCells
 } from './simulation.js';
 
 function updateSand(x, y) {
@@ -16,23 +18,20 @@ function updateSand(x, y) {
     return;
   }
 
-  const under = y + 1;
-  if (under < 110) {
-    const cell = idx(x, under);
-    if (grid[cell] === MATERIALS.empty.id) {
-      swapCells(x, y, x, under);
-      return;
-    }
-    if (grid[cell] === MATERIALS.water.id) {
-      swapCells(x, y, x, under);
-      return;
-    }
+  const underY = y + 1;
+  if (underY < 110 && grid[idx(x, underY)] === MATERIALS.empty.id) {
+    swapCells(x, y, x, underY);
+    return;
+  }
+
+  if (underY < 110 && grid[idx(x, underY)] === MATERIALS.water.id) {
+    swapCells(x, y, x, underY);
+    return;
   }
 
   const dirs = [-1, 1];
-  for (let i = 0; i < 2; i++) {
-    const d = dirs[Math.floor(Math.random() * dirs.length)];
-    const nx = x + d;
+  for (const dir of dirs) {
+    const nx = x + dir;
     const ny = y + 1;
     if (inBounds(nx, ny)) {
       const n = idx(nx, ny);
@@ -71,9 +70,8 @@ function updateWater(x, y) {
 
 function updateSteam(x, y) {
   const i = idx(x, y);
-  // life is imported elsewhere? We need keep in state, but in this file we can access from simulation.js? We didn't export life. Need import life from simulation.js.
-  const { life } = await import('./simulation.js');
   life[i] += 1;
+
   if (life[i] > 18) {
     clearCell(x, y);
     return;
@@ -94,13 +92,15 @@ function updateSteam(x, y) {
     }
   }
 
-  if (randomChance(0.08)) clearCell(x, y);
+  if (randomChance(0.08)) {
+    clearCell(x, y);
+  }
 }
 
 function updateSmoke(x, y) {
-  const { life } = await import('./simulation.js');
   const i = idx(x, y);
   life[i] += 1;
+
   if (life[i] > 25) {
     clearCell(x, y);
     return;
@@ -138,7 +138,6 @@ function updateOil(x, y) {
 }
 
 function updateFire(x, y) {
-  const { life } = await import('./simulation.js');
   const i = idx(x, y);
   life[i] += 1;
 
@@ -152,14 +151,17 @@ function updateFire(x, y) {
   }
 
   const neighbors = [
-    [x, y - 1], [x - 1, y], [x + 1, y],
-    [x, y + 1], [x - 1, y - 1], [x + 1, y - 1]
+    [x, y - 1],
+    [x - 1, y],
+    [x + 1, y],
+    [x, y + 1],
+    [x - 1, y - 1],
+    [x + 1, y - 1]
   ];
 
   for (const [nx, ny] of neighbors) {
     if (!inBounds(nx, ny)) continue;
-    const n = idx(nx, ny);
-    const target = grid[n];
+    const target = grid[idx(nx, ny)];
 
     if (target === MATERIALS.wood.id || target === MATERIALS.plant.id) {
       setCell(nx, ny, 'fire', 18, 140);
@@ -222,8 +224,7 @@ function updateAcid(x, y) {
 
   for (const [nx, ny] of neighbors) {
     if (!inBounds(nx, ny)) continue;
-    const n = idx(nx, ny);
-    const target = grid[n];
+    const target = grid[idx(nx, ny)];
 
     if (target === MATERIALS.empty.id || target === MATERIALS.acid.id) continue;
     if (target === MATERIALS.metal.id || target === MATERIALS.brick.id) continue;
