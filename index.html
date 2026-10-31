@@ -2,88 +2,98 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Particle Forge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Particle Forge Ultra</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="app">
       <aside class="panel left-panel">
         <div class="brand-box">
-          <div class="brand-badge">PF</div>
-          <div>
+          <div class="brand-mark">PF</div>
+          <div class="brand-copy">
             <h1>Particle Forge</h1>
-            <p>creative sandbox</p>
+            <p>Sandbox</p>
           </div>
         </div>
 
         <div class="section-title">Materials</div>
-        <div id="materialList" class="material-list"></div>
+        <div id="materialGrid" class="material-grid"></div>
       </aside>
 
       <main class="sim-panel">
         <div class="toolbar">
-          <div class="chip" id="selectedMaterialName">Sand</div>
-          <button id="pauseBtn" class="toolbar-btn">Pause</button>
-          <button id="clearBtn" class="toolbar-btn">Clear</button>
-          <button id="terrainBtn" class="toolbar-btn">Random Terrain</button>
-          <button id="saveBtn" class="toolbar-btn accent">Screenshot</button>
+          <div id="selectedMaterialName" class="pill">Sand</div>
+          <button id="pauseBtn" class="pill">Pause</button>
+          <button id="clearBtn" class="pill">Clear</button>
+          <button id="terrainBtn" class="pill accent">Random</button>
+          <button id="saveBtn" class="pill accent">Save</button>
         </div>
 
-        <canvas id="world" width="1260" height="770"></canvas>
+        <div class="main-board">
+          <canvas id="world" width="1500" height="860"></canvas>
 
-        <div class="statusbar">
-          <div class="status-item">
-            <span>Brush</span>
-            <strong id="brushSizeLabel">3</strong>
+          <div class="floating-hud">
+            <div class="hud-row">
+              <div class="hud-box"><span>Brush</span><strong id="brushSizeLabel">3</strong></div>
+              <div class="hud-box"><span>Mode</span><strong id="toolModeLabel">Paint</strong></div>
+            </div>
+            <div class="hud-box"><span>Cells</span><strong id="cellCount">0</strong></div>
           </div>
-          <div class="status-item">
-            <span>Mode</span>
-            <strong id="toolModeLabel">Paint</strong>
+        </div>
+
+        <div class="control-box">
+          <div class="tool-row">
+            <button class="tool-btn active" data-mode="paint">Paint</button>
+            <button class="tool-btn" data-mode="erase">Erase</button>
+            <button class="tool-btn" data-mode="heat">Heat</button>
+            <button class="tool-btn" data-mode="special">Special</button>
           </div>
-          <div class="status-item">
-            <span>Cells</span>
-            <strong id="cellCount">0</strong>
+
+          <div class="slider-wrap">
+            <label for="brushSize">Brush</label>
+            <input id="brushSize" type="range" min="1" max="12" value="3" />
           </div>
         </div>
       </main>
 
       <aside class="panel right-panel">
-        <div class="section-title">Tools</div>
+        <div class="section-title">Tips</div>
 
-        <div class="tool-group">
-          <button data-mode="paint" class="tool-btn active">Paint</button>
-          <button data-mode="erase" class="tool-btn">Erase</button>
-          <button data-mode="heat" class="tool-btn">Heat</button>
-        </div>
+        <div class="tool-panel">
+          <div class="info-card">
+            <h3>Reactions</h3>
+            <ul>
+              <li>Water + lava = steam</li>
+              <li>Fire + oil = bigger fire</li>
+              <li>Acid melts many materials</li>
+              <li>Ice melts with heat</li>
+              <li>Wood ignites quickly</li>
+            </ul>
+          </div>
 
-        <div class="range-block">
-          <label for="brushSize">Brush size</label>
-          <input id="brushSize" type="range" min="1" max="9" value="3" />
-        </div>
+          <div class="info-card">
+            <h3>Controls</h3>
+            <ul>
+              <li>Paint with touch / mouse</li>
+              <li>Use Erase for cleaning</li>
+              <li>Use wheel to adjust brush</li>
+              <li>Q / E to switch materials</li>
+            </ul>
+          </div>
 
-        <div class="guide-box">
-          <h3>Controls</h3>
-          <ul>
-            <li>Left click to paint</li>
-            <li>Right click to erase</li>
-            <li>Scroll to change brush size</li>
-            <li>Q/E to cycle materials</li>
-          </ul>
-        </div>
-
-        <div class="guide-box">
-          <h3>Tips</h3>
-          <ul>
-            <li>Water cools lava</li>
-            <li>Fire ignites oil and wood</li>
-            <li>Acid dissolves almost everything</li>
-            <li>Steam rises and fades</li>
-          </ul>
+          <div class="info-card">
+            <h3>Mobile</h3>
+            <ul>
+              <li>Optimized for iPad</li>
+              <li>Large touch targets</li>
+              <li>Responsive layout</li>
+            </ul>
+          </div>
         </div>
       </aside>
     </div>
 
-    <script src="script.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
